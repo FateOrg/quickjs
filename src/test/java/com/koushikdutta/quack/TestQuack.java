@@ -64,7 +64,7 @@ public class TestQuack {
                     b.append("null");
                 else
                     b.append(o.toString());
-                b.append("fff\n");
+//                b.append("fff\n");
             }
             return b.toString();
         }
@@ -117,8 +117,15 @@ public class TestQuack {
     @Test
     public void testRoundtrip() {
         QuackContext quack = QuackContext.create(false);
+        JavaScriptObject global = quack.getGlobalObject();
+        global.set("console", new Console(quack, System.out, System.err));
         String script = "function(ret) { return ret; }";
+        String script1 = "(new Promise(resolve => resolve()).then(() => {this.a = 100;console.log(`js this.a: ${this.a}`)}),function () {return this.a})";
         JavaScriptObject func = quack.compileFunction(script, "?");
+        JavaScriptObject func1 = quack.compileFunction(script1,"?");
+
+        Object res = func1.call();
+        System.out.println(res);
 
         // should all come back as numbers.
         List<Object> values = Arrays.asList(new Float(0), new Double(0), 0f, 0d);
@@ -180,7 +187,7 @@ public class TestQuack {
         assertTrue(resultHolder.result);
         quack.close();
     }
-    
+
 
     interface RoundtripCallback {
         Object callback(Object o);
@@ -755,6 +762,7 @@ public class TestQuack {
         promise.then(new QuackPromiseReceiver(){
             @Override
             public void receive(Object o) {
+                System.out.println(o);
                 semaphore.release();
             }
         });

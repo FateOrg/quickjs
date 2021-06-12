@@ -28,5 +28,6 @@ if not exist "ninja" (
   if not exist "archive\ninja-win.zip" (
     curl -L "https://github.com/ninja-build/ninja/releases/download/v1.10.0/ninja-win.zip" --output archive\ninja-win-1.10.0.zip
   )
+  mv archive\ninja-win.zip archive\ninja-win-1.10.0.zip
   tar xf archive\ninja-win-1.10.0.zip -C ninja
 )

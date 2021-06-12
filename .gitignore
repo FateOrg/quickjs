@@ -15,7 +15,7 @@
 *.war
 *.nar
 *.ear
-*.zip
+# *.zip
 *.tar.gz
 *.rar
 
@@ -27,7 +27,7 @@ hs_err_pid*
 /native/build
 /target/
 /native/MinGW
-/native/archive
+# /native/archive
 /native/cmake
 /native/ninja
 /src/main/resources/META-INF/quickjs.dll
